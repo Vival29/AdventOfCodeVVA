@@ -7,5 +7,6 @@ public class Main {
         Day3 day3 = new Day3();
 
         System.out.println(day3.resolvePuzzlePart1());
+        System.out.println(day3.resolvePuzzlePart2());
     }
 }
