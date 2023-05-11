@@ -6,6 +6,6 @@ public class Main {
     public static void main(String[] args) {
         Day3 day3 = new Day3();
 
-        System.out.println(day3.resolvePuzzle());
+        System.out.println(day3.resolvePuzzlePart1());
     }
 }
