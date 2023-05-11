@@ -17,23 +17,25 @@ public class Day3 {
     private List<List<String>> groups = new ArrayList<>();
     private ArrayList<Character> itemByGroup = new ArrayList<>();
     private ArrayList<Character> itemsIdentiques = new ArrayList<>();
+
     public Integer resolvePuzzlePart1() {
         //create an arrayList, split by \n ok
         // each index, split in two arrayList, the two compartement
         // "merge" the two compartment keeping only what is identical
         //give value for each letter then sum
         sacs = getSacs();
-        for(String s:sacs){
+        for (String s : sacs) {
             int length = s.length();
-            String compartiment1 = s.substring(0,length/2);
-            String compartiment2 = s.substring(length/2, length);
+            String compartiment1 = s.substring(0, length / 2);
+            String compartiment2 = s.substring(length / 2, length);
             itemsIdentiques.add(compareCompartiments(compartiment1, compartiment2));
         }
         return caclulateSum(itemsIdentiques);
     }
-    public Integer resolvePuzzlePart2(){
+
+    public Integer resolvePuzzlePart2() {
         groups = divideByGroups(sacs);
-        for (List<String> groupe :groups) {
+        for (List<String> groupe : groups) {
             itemByGroup.add(compareGroup(groupe));
         }
 
@@ -49,8 +51,8 @@ public class Day3 {
         elf1.retainAll(elf2);
         elf1.retainAll(elf3);
 
-        for (Character c:elf1) {
-            if(c != null){
+        for (Character c : elf1) {
+            if (c != null) {
                 result = c;
             }
         }
@@ -82,19 +84,19 @@ public class Day3 {
     }
 
     private Character compareCompartiments(String compartiment1, String compartiment2) {
-        Character result= null;
+        Character result = null;
         List<Character> charComp1 = compartiment1.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         List<Character> charComp2 = compartiment2.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         charComp1.retainAll(charComp2);
-            for (Character c:charComp1) {
-                if(c != null){
-                    result = c;
-                }
+        for (Character c : charComp1) {
+            if (c != null) {
+                result = c;
             }
+        }
         return result;
     }
 
-    private ArrayList<String> getSacs(){
+    private ArrayList<String> getSacs() {
         try {
             File input = new File("src/main/java/hearc/ig/day3/inputDay3.txt");
             Scanner scanner = new Scanner(input);
