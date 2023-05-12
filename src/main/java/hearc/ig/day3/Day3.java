@@ -1,29 +1,20 @@
 package hearc.ig.day3;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
-
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 public class Day3 {
-    private static final Logger logger = LogManager.getLogger(Day3.class);
-    private ArrayList<String> sacs = new ArrayList<>();
+    private static final Logger logger = LoggerFactory.getLogger(Day3.class);
     private List<List<String>> groups = new ArrayList<>();
     private ArrayList<Character> itemByGroup = new ArrayList<>();
     private ArrayList<Character> itemsIdentiques = new ArrayList<>();
 
-    public Integer resolvePuzzlePart1() {
-        //create an arrayList, split by \n ok
-        // each index, split in two arrayList, the two compartement
-        // "merge" the two compartment keeping only what is identical
-        //give value for each letter then sum
-        sacs = getSacs();
+    public Integer resolvePuzzlePart1(List<String> sacs) {
         for (String s : sacs) {
             int length = s.length();
             String compartiment1 = s.substring(0, length / 2);
@@ -33,7 +24,7 @@ public class Day3 {
         return caclulateSum(itemsIdentiques);
     }
 
-    public Integer resolvePuzzlePart2() {
+    public Integer resolvePuzzlePart2(List<String> sacs) {
         groups = divideByGroups(sacs);
         for (List<String> groupe : groups) {
             itemByGroup.add(compareGroup(groupe));
@@ -59,7 +50,7 @@ public class Day3 {
         return result;
     }
 
-    private List<List<String>> divideByGroups(ArrayList<String> sacs) {
+    private List<List<String>> divideByGroups(List<String> sacs) {
         List<List<String>> elfGroups = new ArrayList<>();
         for (int i = 0; i < sacs.size(); i += 3) {
             int end = Math.min(i + 3, sacs.size());
@@ -69,7 +60,7 @@ public class Day3 {
         return elfGroups;
     }
 
-    private Integer caclulateSum(ArrayList<Character> itemsIdentiques) {
+    private Integer caclulateSum(List<Character> itemsIdentiques) {
         List<Integer> intList = itemsIdentiques.stream().map(c -> {
             if (c >= 'a' && c <= 'z') {
                 return c - 'a' + 1;
@@ -96,7 +87,8 @@ public class Day3 {
         return result;
     }
 
-    private ArrayList<String> getSacs() {
+    public List<String> getSacs() {
+        List<String> sacs = new ArrayList<>();
         try {
             File input = new File("src/main/java/hearc/ig/day3/inputDay3.txt");
             Scanner scanner = new Scanner(input);
