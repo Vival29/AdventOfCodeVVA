@@ -1,8 +1,5 @@
 import hearc.ig.day4.Day4;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

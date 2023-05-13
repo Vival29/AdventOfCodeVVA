@@ -1,17 +1,15 @@
 package hearc.ig.day4;
 
-
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Day4 {
 
     private static final Logger logger = LoggerFactory.getLogger(Day4.class);
+    public static final String PATH = "src/main/java/hearc/ig/day4/inputDay4.txt";
     private List<String> pairs = new ArrayList<>();
 
     public Integer resolvePuzzlePart1(List<String> pairs) {
@@ -86,23 +84,5 @@ public class Day4 {
         return range;
     }
 
-    public List<String> getPairs() {
-        try {
-            File input = new File("src/main/java/hearc/ig/day4/inputDay4.txt");
-            Scanner scanner = new Scanner(input);
-
-            while (scanner.hasNextLine()) {
-                String pair = scanner.nextLine();
-                pairs.add(pair);
-            }
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-
-            logger.info("Le fichier n'a pas été trouvé.");
-            e.printStackTrace();
-        }
-        return pairs;
-    }
 
 }

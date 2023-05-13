@@ -1,15 +1,14 @@
 package hearc.ig.day3;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 public class Day3 {
     private static final Logger logger = LoggerFactory.getLogger(Day3.class);
+    public static final String PATH = "src/main/java/hearc/ig/day3/inputDay3.txt";
     private List<List<String>> groups = new ArrayList<>();
     private ArrayList<Character> itemByGroup = new ArrayList<>();
     private ArrayList<Character> itemsIdentiques = new ArrayList<>();
@@ -87,23 +86,4 @@ public class Day3 {
         return result;
     }
 
-    public List<String> getSacs() {
-        List<String> sacs = new ArrayList<>();
-        try {
-            File input = new File("src/main/java/hearc/ig/day3/inputDay3.txt");
-            Scanner scanner = new Scanner(input);
-
-            while (scanner.hasNextLine()) {
-                String sac = scanner.nextLine();
-                sacs.add(sac);
-            }
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-
-            logger.info("Le fichier n'a pas été trouvé.");
-            e.printStackTrace();
-        }
-        return sacs;
-    }
 }
