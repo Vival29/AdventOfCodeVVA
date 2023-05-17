@@ -1,8 +1,9 @@
 package hearc.ig.day5;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Day5 {
+public class Day5 implements Serializable {
     public static final String PATH = "src/main/java/hearc/ig/day5/inputDay5.txt";
     Map<Integer, LinkedList<String>> stacks = new HashMap<>();
 
@@ -19,16 +20,46 @@ public class Day5 {
                 stacks.get(to).addFirst(crate);
             }
         }
+        return getTopCrates(stacks);
+    }
+    public String resolvePuzzlePart2(List<String> rawSteps){
+        initialSituation();
+        List<String> steps = getSteps(rawSteps);
+        for(String step:steps){
+            List<String> current = List.of(step.split("-"));
+            Integer numberToMove = Integer.parseInt(current.get(0));
+            Integer from = Integer.parseInt(current.get(1));
+            Integer to = Integer.parseInt(current.get(2));
+            if(numberToMove==1){
+                String crate = stacks.get(from).removeFirst();
+                stacks.get(to).addFirst(crate);
+            } else {
+                List<String> tmp = stacks.get(from).subList(0, numberToMove);
+                List<String> tmpCopy = new ArrayList<>(tmp);
+                while(numberToMove>0) {
+                    stacks.get(to).addFirst(tmpCopy.get(numberToMove - 1));
+                    stacks.get(from).removeFirst();
+                    numberToMove--;
+                }
+
+            }
+        }
+        return getTopCrates(stacks);
+    }
+
+    private String getTopCrates(Map<Integer, LinkedList<String>> stacks) {
         StringBuilder answer = new StringBuilder();
         answer.append(stacks.get(1).getFirst());
         answer.append(stacks.get(2).getFirst());
         answer.append(stacks.get(3).getFirst());
-        answer.append(stacks.get(4).getFirst());
-        answer.append(stacks.get(5).getFirst());
-        answer.append(stacks.get(6).getFirst());
-        answer.append(stacks.get(7).getFirst());
-        answer.append(stacks.get(8).getFirst());
-        answer.append(stacks.get(9).getFirst());
+        if(stacks.size()>3) {
+            answer.append(stacks.get(4).getFirst());
+            answer.append(stacks.get(5).getFirst());
+            answer.append(stacks.get(6).getFirst());
+            answer.append(stacks.get(7).getFirst());
+            answer.append(stacks.get(8).getFirst());
+            answer.append(stacks.get(9).getFirst());
+        }
         return answer.toString();
     }
 
@@ -49,6 +80,7 @@ public class Day5 {
     }
 
     public Map<Integer, LinkedList<String>> initialSituation(){
+        stacks.clear();
         List<String> one = new LinkedList<>(Arrays.asList("S", "P", "W", "N", "J", "Z"));
         List<String> two = new LinkedList<>(Arrays.asList("T", "S", "G"));
         List<String> three = new LinkedList<>(Arrays.asList("H", "L", "R", "Q", "V"));

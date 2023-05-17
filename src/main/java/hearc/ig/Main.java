@@ -52,5 +52,6 @@ public class Main {
         System.out.println("Day5");
         List<String> rawSteps = data.getInputByLine(day5.PATH);
         System.out.println(day5.resolvePuzzlePart1(rawSteps));
+        System.out.println(day5.resolvePuzzlePart2(rawSteps));
     }
 }
