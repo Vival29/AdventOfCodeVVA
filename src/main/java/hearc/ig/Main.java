@@ -11,10 +11,10 @@ import java.util.List;
 public class Main {
     Persistance data = new Persistance();
     public static void main(String[] args) {
-        //new Main().runDay1();
-        //new Main().runDay2();
-        //new Main().runDay3();
-        //new Main().runDay4();
+        new Main().runDay1();
+        new Main().runDay2();
+        new Main().runDay3();
+        new Main().runDay4();
         new Main().runDay5();
 
     }
@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Day1");
         List<String> calories = data.getInputByLine(day1.PATH);
         System.out.println(day1.resolvePuzzlePart1(calories));
-        System.out.println(day1.resolvePuzzlePart2() + "\n");
+        System.out.println(day1.resolvePuzzlePart2(calories) + "\n");
     }
 
     public void runDay2(){
