@@ -7,13 +7,12 @@ import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 public class Day3 {
-    private static final Logger logger = LoggerFactory.getLogger(Day3.class);
-    public static final String PATH = "src/main/java/hearc/ig/day3/inputDay3.txt";
-    private List<List<String>> groups = new ArrayList<>();
-    private ArrayList<Character> itemByGroup = new ArrayList<>();
-    private ArrayList<Character> itemsIdentiques = new ArrayList<>();
+    public static final String PATH = "inputDay3.txt";
+
+    // Pareil ici, tente d'éviter d'introduire des états lorsqu'ils ne sont pas nécessaires
 
     public Integer resolvePuzzlePart1(List<String> sacs) {
+        List<Character> itemsIdentiques = new ArrayList<>();
         for (String s : sacs) {
             int length = s.length();
             String compartiment1 = s.substring(0, length / 2);
@@ -24,7 +23,8 @@ public class Day3 {
     }
 
     public Integer resolvePuzzlePart2(List<String> sacs) {
-        groups = divideByGroups(sacs);
+        List<Character> itemByGroup = new ArrayList<>();
+        List<List<String>> groups = divideByGroups(sacs);
         for (List<String> groupe : groups) {
             itemByGroup.add(compareGroup(groupe));
         }
@@ -60,30 +60,30 @@ public class Day3 {
     }
 
     private Integer caclulateSum(List<Character> itemsIdentiques) {
-        List<Integer> intList = itemsIdentiques.stream().map(c -> {
+        // mapToInt + sum est sans doute plus simple
+        return itemsIdentiques.stream().mapToInt(c -> {
             if (c >= 'a' && c <= 'z') {
                 return c - 'a' + 1;
             } else if (c >= 'A' && c <= 'Z') {
                 return c - 'A' + 27;
             } else {
-                return null;
+                return 0;
             }
-        }).toList();
-
-        return intList.stream().reduce(0, Integer::sum);
+        }).sum();
     }
 
     private Character compareCompartiments(String compartiment1, String compartiment2) {
-        Character result = null;
         List<Character> charComp1 = compartiment1.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         List<Character> charComp2 = compartiment2.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         charComp1.retainAll(charComp2);
+        // Tu peux retirer result ici
         for (Character c : charComp1) {
             if (c != null) {
-                result = c;
+                return c;
             }
         }
-        return result;
+        // Et retourner une Exception, car tu es pas censé tombé là..
+        throw new IllegalStateException();
     }
 
 }

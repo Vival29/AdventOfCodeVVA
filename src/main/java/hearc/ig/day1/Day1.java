@@ -11,28 +11,31 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Day1 {
-    private static final Logger logger = LoggerFactory.getLogger(Day1.class);
-    public static final String PATH = "src/main/java/hearc/ig/day1/inputDay1.txt";
+    public static final String PATH = "inputDay1.txt";
 
-    List<Integer> listSumByElf = new ArrayList<>();
+    public List<Integer> listSumByElf (List<String> calories) {
+        List<List<Integer>> caloriesByElf = splitByNull(calories);
+        return caloriesByElf.stream().map(list -> list.stream().mapToInt(Integer::intValue).sum()).collect(Collectors.toList());
+    }
 
     public Integer resolvePuzzlePart1(List<String> calories){
-        List<List<Integer>> caloriesByElf = splitByNull(calories);
-        listSumByElf = caloriesByElf.stream().map(list -> list.stream().mapToInt(Integer::intValue).sum())
-                .collect(Collectors.toList());
-        return listSumByElf.stream().max(Integer::compareTo).orElse(0);
+        return listSumByElf(calories).stream().max(Integer::compareTo).orElse(0);
     }
-    public Integer resolvePuzzlePart2(){
-        List<Integer> top3Elfs = listSumByElf.stream().sorted(Collections.reverseOrder(Integer::compareTo)).limit(3).collect(Collectors.toList());
 
-        return top3Elfs.stream().reduce(0, (a,b)->a+b);
+    // Privilégie les fonctions pures (méthodes pures ici), afin de ne pas garder d'état entre tes méthodes (listSumByElf)
+    public Integer resolvePuzzlePart2(List<String> calories){
+        return listSumByElf(calories).stream()
+            .sorted(Collections.reverseOrder(Integer::compareTo))
+            .mapToInt(x -> x) // Pour pouvoir utiliser sum()
+            .limit(3)
+            .sum();
     }
 
     private List<List<Integer>> splitByNull(List<String> calories) {
         List<List<Integer>> caloriesByElf = new ArrayList<>();
         List<Integer> currentElf = new ArrayList<>();
         for(String calorie:calories){
-            if(calorie == ""){
+            if(calorie.equals("")){
                 caloriesByElf.add(currentElf);
                 currentElf = new ArrayList<>();
             } else {

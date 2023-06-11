@@ -1,6 +1,10 @@
 package hearc.ig;
 
 import hearc.ig.day3.Day3;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,24 +15,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Persistance {
-    private static final Logger logger = LoggerFactory.getLogger(Persistance.class);
     public List<String> getInputByLine(String pathname) {
-        List<String> sacs = new ArrayList<>();
-        try {
-            File input = new File(pathname);
-            Scanner scanner = new Scanner(input);
-
-            while (scanner.hasNextLine()) {
-                String sac = scanner.nextLine();
-                sacs.add(sac);
-            }
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-
-            logger.info("Le fichier n'a pas été trouvé.");
-            e.printStackTrace();
+        try(InputStream is = getClass().getClassLoader().getResourceAsStream(pathname);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr)) {
+            return br.lines().collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return sacs;
     }
 }
